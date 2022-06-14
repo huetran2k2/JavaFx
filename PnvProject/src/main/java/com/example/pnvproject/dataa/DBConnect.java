@@ -1,6 +1,6 @@
 package com.example.pnvproject.dataa;
 
-import com.example.pnvproject.models.Painting;
+import com.example.pnvproject.models.Flowers;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 public class DBConnect {
     private Connection connection;
 
-    public static final String URL = "jdbc:mysql://localhost/tujavafx";
+    public static final String URL = "jdbc:mysql://localhost/hujavafx";
     public static final String USERNAME = "root";
     public static final String PASSWORD = "";
 
@@ -21,31 +21,31 @@ public class DBConnect {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<Painting> getPaintings(){
-        ArrayList<Painting> list = new ArrayList<>();
-        String sql = "SELECT * FROM painting";
+    public ArrayList<Flowers> getFlowers(){
+        ArrayList<Flowers> list = new ArrayList<>();
+        String sql = "SELECT * FROM flowers";
         try {
             ResultSet results = connection.prepareStatement(sql).executeQuery();
             while (results.next()){
 //                System.out.println(results.getInt("id"));
 //                System.out.println(results.getString("name"));
 //                System.out.println(results.getFloat("score"));
-                Painting painting = new Painting(
+                Flowers flowers = new Flowers(
                         results.getInt("id"),
                         results.getString("name"),
                         results.getString("image"),
                         results.getInt("price"),
                         results.getString("description")
                 );
-                list.add(painting);
+                list.add(flowers);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return list;
     }
-    public void insertPainting(Painting painting){
-        String sql = "INSERT INTO painting (name, image, price, description) VALUE ('"+painting.name+"','"+painting.image+"','"+painting.price+"','"+painting.description+"')";
+    public void insertFlowers(Flowers flowers){
+        String sql = "INSERT INTO flowers (name, image, price, description) VALUE ('"+flowers.name+"','"+flowers.image+"','"+flowers.price+"','"+flowers.description+"')";
         try {
             connection.prepareStatement(sql).executeUpdate();
         } catch (SQLException e) {
@@ -53,8 +53,8 @@ public class DBConnect {
         }
     }
 
-    public void updatePainting(Painting painting){
-        String sql = "UPDATE painting SET name = '"+ painting.name +"', image = '"+painting.image+"', price = '"+painting.price+"', description = '"+painting.description+"' WHERE id = "+ painting.id;
+    public void updateFlowers(Flowers flowers){
+        String sql = "UPDATE flowers SET name = '"+ flowers.name +"', image = '"+flowers.image+"', price = '"+flowers.price+"', description = '"+flowers.description+"' WHERE id = "+ flowers.id;
         try {
             connection.prepareStatement(sql).executeUpdate();
         } catch (SQLException e) {
@@ -62,8 +62,8 @@ public class DBConnect {
         }
     }
 
-    public void deletePainting(int id){
-        String sql = "DELETE FROM painting WHERE id = "+ id;
+    public void deleteFlowers(int id){
+        String sql = "DELETE FROM flowers WHERE id = "+ id;
         try {
             connection.prepareStatement(sql).executeUpdate();
         } catch (SQLException e) {
